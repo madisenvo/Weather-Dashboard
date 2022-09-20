@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,700;1,200&display=swap">
+    <link rel="stylesheet" href="./assets/style.css" />
+  
+
+    <title>Weather Dashboard</title>
+</head>
+
+<body>
+    <header id= "header" class="container-fluid text-light mb-2 p-3">
+        <div class="d-flex align-items-center justify-content-center">
+            <h1>Weather Dashboard</h1>
+        </div>
+    </header>
+
+    <main class="flex-row">
+        <div id="card" class="col-2">
+          <div class="border-bottom">
+            <h2>Search for a City:</h2>
+            <form id="user-form">
+              <input name="city" id="city" input style="font-size:25px;" type="text" placeholder="Denver" class="form-input"/>
+              <button type="submit" class="btn">Search</button>
+            </form>
+          </div>
+    
+          <div>
+            <div id="language-buttons" class="card-body"></div>
+          </div>
+        </div>
+    
+        <div></div>
+      </main>
+</body>
+</html>

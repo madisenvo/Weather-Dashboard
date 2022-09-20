@@ -1,0 +1,32 @@
+:root{
+    --blue: rgb(91, 114, 217);
+    --plum: rgb(43, 8, 140);
+}
+
+#header{
+    height: 90px;
+    background-image: linear-gradient(to right,var(--blue),var(--plum) );
+  }
+
+  .btn {
+    font-size: 1.3rem;
+    padding: 6px 5px;
+    width: 100%;
+    display: block;
+    margin: 13px 0;
+    border-radius: .3rem;
+    color: white;
+    outline: none;
+    background-color: var(--blue);
+  }
+
+ .form-input{
+    margin-top: 5px;
+    width: 100%;
+    height: fit-content;
+    size: larger;
+    border-radius: 4px;
+    border-color: rgb(209, 200, 200);
+ }
+
+
