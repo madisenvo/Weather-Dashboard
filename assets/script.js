@@ -1,4 +1,4 @@
-var citySelection = document.querySelector("#city");
+var citySelection = document.querySelector("#city").value;
 var submitBtn = document.querySelector("#submitBtn");
 var userInputEl = $('#user-input')
 var inputEl = $('.form-input')
@@ -10,7 +10,7 @@ var city = userFormEl.input.value;
 
 userFormEl.addEventListener('submit', function (e) {
     e.preventDefault();
-    var city = userFormEl.input.value;
+    var city = citySelection.value;
 
     
   
@@ -25,9 +25,11 @@ userFormEl.addEventListener('submit', function (e) {
     // } else {
     //   alert('Please enter a GitHub username');
     // }
-    console.log(city)
+    console.log("hello from" + city);
   });
 
+
+console.log("hello from" + city);
 
 // // getting data from API
 //   var getCityWeather = function () {
