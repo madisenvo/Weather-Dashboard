@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,700;1,200&display=swap">
     <link rel="stylesheet" href="./assets/style.css" />
   
@@ -25,24 +24,30 @@
         <div id="card" class="col-3">
           <div class="border-bottom">
             <h2>Search for a City:</h2>
-            <div id="user-input">
-              <input id="city" style="font-size:25px;" type="text" placeholder="Denver" autofocus="true" class="form-input"/>
+            <form id="user-form">
+              <input id="city" style="font-size:25px;" type="text" placeholder="Denver" autofocus="true" class="city-input"/>
               <button type="submit" id="submitBtn" class="btn">Search</button>
-            </div>
+            </form>
           </div>
+        </div>
           
-          <form id="search-history"></form>  
+        <div id="search-history"></div>  
     
           <div>
             <div id="city-weather"></div>
           </div>
 
-          <div>
-            <div id="five-day-forecast"></div>
-          </div>
+        <div class="row d-none" id="five-day-forecast">
+          <h3>5-Day Forecast</h3>
+          <div class="forecast" ></div>
+          <div class="forecast" ></div>
+          <div class="forecast" ></div>
+          <div class="forecast" ></div>
+          <div class="forecast" ></div>
         </div>
-    
-        <div></div>
+
       </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="assets/script.js"></script>
 </body>
 </html>
