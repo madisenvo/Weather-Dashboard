@@ -22,7 +22,7 @@ var handleErrors = function(response){
 function getCityWeather() {
 
 
-  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + "Denver" + "&appid=" + APIKey;  
+  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;  
   fetch(queryURL)
   .then(handleErrors)
   .then(function (response) {
@@ -31,12 +31,19 @@ function getCityWeather() {
   .then(function (response) {
     console.log(response);
     saveSearch(city);
-    // set variables from API
     renderCity();
-    getForecast(event);
+    // getForecast();
 
+    let cityWeatherHTML = `
+      <h3>${response.name}></h3>
+      <ul class="list-unstyled">
+        <li>Temperature: ${response.main.temp}&#8457;</li>
+        <li>Humidity: ${response.main.humidity}%</li>
+        <li>Wind Speed: ${response.wind.speed} mph</li>
+      </ul>`;
+  $('#city-weather').html(cityWeatherHTML);
   });
-  };
+};
 
 // save to local storage
 var saveSearch = function(newSearch){
@@ -59,14 +66,14 @@ function renderCity(){
   $('#search-history').empty();
   if (localStorage.length===0){
     if (previousSearch){
-      $('.city-input').attr("value", previousSearch);
+      $('.city-search').attr("value", previousSearch);
     } else {
-      $('.city-input').attr("value", "Denver");
+      $('.city-search').attr("value", "Denver");
         }
   } else {
     let lastCityKey="cities"+(localStorage.length-1);
     previousSearch=localStorage.getItem(lastCityKey);
-    $('.city-input').attr("value", previousSearch);
+    $('.city-search').attr("value", previousSearch);
     for (let i = 0; i < localStorage.length; i++) {
       let city = localStorage.getItem("cities" + i);
       let cityEl;
@@ -83,9 +90,9 @@ function renderCity(){
 }}
 
 // // getting 5 day forecast
-var getForecast = function(){
+// var getForecast = function(){
 
-}
+// }
 // // let cityID = response.data.id;
 // var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + city + "&appid=" + APIKey;
 // fetch(forecastQueryURL)
@@ -97,7 +104,14 @@ var getForecast = function(){
 //   });
 
   // seach button event listener
-  submitBtn.on("click", function(event){
-    event.preventDefault();
-    getCityWeather(event);
-    });
+submitBtn.on("click", function(event){
+  event.preventDefault();
+  getCityWeather(event);
+});
+
+$("#search-history").on("click", function(event){
+  event.preventDefault();
+  $("#city-search").val(event.target.textContent);
+  currentCity=$("#city-search").val();
+  getCityWeather(event);
+})
