@@ -1,47 +1,103 @@
-const cityInput = $(".city-input");
-const submitBtn = $("#submitBtn");
-const userFormEl = $('#user-form');
-const searchHistoryEl = $("#search-history");
-const fiveDayForecastEl = $("#five-day-forecast");
+var cityInput = $(".city-input");
+var submitBtn = $("#submitBtn");
+var userFormEl = $('#user-form');
+var searchHistoryEl = $("#search-history");
+var fiveDayForecastEl = $("#five-day-forecast");
+var previousSearch = '';
+var currentCity = '';
 
 
 var APIKey = "019a7bf4afa5e4a22e320f4131dc54fc";
 
+city = "Denver"
 
-// none of this is working
-var formSubmitHandler = function (event){
-  event.preventDefault();
-  var city = cityInput.value.trim();
-
-  console.log(city);
-}
-
-userFormEl.addEventListener('submit', formSubmitHandler)
+// fetch error handler
+var handleErrors = function(response){
+  if (!response.ok) {
+    alert('Error: ' + response.statusText);
+  return response;
+}};
 
 // getting data from API
-  var getCityWeather = function () {
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;  
-    fetch(queryURL)
-      .then(function (response) {
-        if (response.ok) {
-          response.json().then(function (data) {
-          });
-        } else {
-          alert('Error: ' + response.statusText);
-        }
-      })
-      .catch(function (error) {
-        alert('Unable to access weather data.');
-      });
+function getCityWeather() {
+
+
+  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + "Denver" + "&appid=" + APIKey;  
+  fetch(queryURL)
+  .then(handleErrors)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (response) {
+    console.log(response);
+    saveSearch(city);
+    // set variables from API
+    renderCity();
+    getForecast(event);
+
+  });
   };
 
-// getting 5 day forecast
-let cityID = response.data.id;
-var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityID + "&appid=" + APIKey;
-fetch(forecastQueryURL)
-  .then(function(response){
-    fiveDayForecastEl.classList.remove("d-none");
-    // for loop to append details to divs - something like...
-    // const forecastEls = document.querySelectorAll(".forecast");
-    // for (i = 0; i < forecastEls.length; i++) {
-  });
+// save to local storage
+var saveSearch = function(newSearch){
+  let repeat = false;
+// Check if search in local storage
+  for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage["cities" + i] === newSearch) {
+          repeat = true;
+          break;
+      }
+  }
+// Save to localStorage if search is new
+  if (repeat === false) {
+      localStorage.setItem('cities' + localStorage.length, newSearch);
+  }
+}
+
+// create function to render search history to page
+function renderCity(){
+  $('#search-history').empty();
+  if (localStorage.length===0){
+    if (previousSearch){
+      $('.city-input').attr("value", previousSearch);
+    } else {
+      $('.city-input').attr("value", "Denver");
+        }
+  } else {
+    let lastCityKey="cities"+(localStorage.length-1);
+    previousSearch=localStorage.getItem(lastCityKey);
+    $('.city-input').attr("value", previousSearch);
+    for (let i = 0; i < localStorage.length; i++) {
+      let city = localStorage.getItem("cities" + i);
+      let cityEl;
+        if (currentCity===""){
+            currentCity=previousSearch;
+        }
+        if (city === currentCity) {
+            cityEl = `<button type="button" class="list-group-item list-group-item-action active">${city}</button></li>`;
+        } else {
+            cityEl = `<button type="button" class="list-group-item list-group-item-action">${city}</button></li>`;
+        } 
+        $('#search-history').prepend(cityEl);
+        }
+}}
+
+// // getting 5 day forecast
+var getForecast = function(){
+
+}
+// // let cityID = response.data.id;
+// var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + city + "&appid=" + APIKey;
+// fetch(forecastQueryURL)
+//   .then(function(response){
+//     // for loop to append details to divs - something like...
+//     // const forecastEls = document.querySelectorAll(".forecast");
+//     // for (i = 0; i < forecastEls.length; i++) {
+//     // append something
+//   });
+
+  // seach button event listener
+  submitBtn.on("click", function(event){
+    event.preventDefault();
+    getCityWeather(event);
+    });
