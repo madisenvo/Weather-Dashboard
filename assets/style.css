@@ -20,13 +20,21 @@
     background-color: var(--blue);
   }
 
- .city-input{
+#city{
     margin-top: 5px;
     width: 100%;
     height: fit-content;
     size: larger;
     border-radius: 4px;
     border-color: rgb(209, 200, 200);
- }
+}
 
+/* .list-group-item{
+  width: 100%;
+  justify-content: space-between;
+} */
+
+#city-weather{
+  border-color: black;
+}
 
