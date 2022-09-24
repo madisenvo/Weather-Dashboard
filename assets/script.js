@@ -10,21 +10,8 @@ var currentCity = '';
 
 var APIKey = "019a7bf4afa5e4a22e320f4131dc54fc";
 
-
-
-// fetch error handler
-var handleErrors = function(response){
-  if (!response.ok) {
-    alert('Error: ' + response.statusText);
-  return response;
-}};
-
 // getting data from API
 function getCityWeather(newCity) {
-  //e.preventDefault();
-  //var newCity = cityInput.value;
-  //console.log(newCity);
-
   var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + newCity + "&appid=" + APIKey + "&units=imperial";  
   fetch(queryURL) 
   .then(function (response) {
@@ -34,18 +21,20 @@ function getCityWeather(newCity) {
     console.log("Res: " +JSON.stringify(res));
     saveSearch(newCity);
     renderCity();
-    // getForecast();
-
+    getForecast();
     let cityWeatherHTML = `
-      <h3>${res.name} ${moment().format("(MM/DD/YY)")} <img src= https://openweathermap.org/img/w/${res.weather[0].icon}.png> </h3>
-      <ul class="list-unstyled p-3 m-3 bg-primary text-light" style="width: 12rem">
-        <li>Temperature: ${res.main.temp}°F</li>
-        <li>Humidity: ${res.main.humidity}%</li>
-        <li>Wind Speed: ${res.wind.speed} mph</li>
-      </ul>`;
+      <div class="weather-card card col-7 m-2 p0">
+        <h2>${res.name} ${moment().format("(MM/DD/YY)")} <img src= https://openweathermap.org/img/w/${res.weather[0].icon}.png> </h2>
+        <ul class="list-unstyled p-3 m-3" style="width: 12rem">
+          <li>Temperature: ${res.main.temp}°F</li>
+          <li>Humidity: ${res.main.humidity}%</li>
+          <li>Wind Speed: ${res.wind.speed} mph</li>
+        </ul>
+      </div>`;
   $('#city-weather').html(cityWeatherHTML);
-  });
-};
+
+})};
+
 
 // save to local storage
 var saveSearch = function(newSearch){
@@ -82,37 +71,52 @@ function renderCity(){
         if (currentCity===""){
             currentCity=previousSearch;
         }
-        if (city === currentCity) {
-            cityEl = `<button type="button" class="list-group-item list-group-item-action">${city}</button></li>`;
-        } else {
-            cityEl = `<button type="button" class="list-group-item list-group-item-action">${city}</button></li>`;
-        } 
+      cityEl = `<button type="button" class="list-group-item list-group-item-action">${city}</button></li>`;
         $('#search-history').append(cityEl);
         }
 }}
 
-//syntax for date forecast
-//res.dt_txt.split(" ")[0];
-
-// // getting 5 day forecast
-// var getForecast = function(){
-
-// }
-// // let cityID = response.data.id;
-// var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + city + "&appid=" + APIKey;
-// fetch(forecastQueryURL)
-//   .then(function(response){
-//     // for loop to append details to divs - something like...
-//     // const forecastEls = document.querySelectorAll(".forecast");
-//     // for (i = 0; i < forecastEls.length; i++) {
-//     // append something
-//   });
+function getForecast(){
+  let city = $("#city").val();
+  let forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&appid=" + APIKey;
+  fetch(forecastQueryURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (res) {
+      console.log("resp :" + JSON.stringify(res))
+      let forecastHTML = `
+        <h3>5-Day Forecast:</h3>
+        <div></div>`;
+        // Loop over the 5 day forecast and build the template HTML using UTC offset and Open Weather Map icon
+        for (let i = 0; i < res.list.length; i++) {
+            let day = res.list[i];
+            let dayTime = day.dt;
+            let timeZone = res.city.timezone;
+            let timeZoneHours = timeZone / 60 / 60;
+            let thisMoment = moment.unix(dayTime).utc().utcOffset(timeZoneHours);
+            let iconURL = "https://openweathermap.org/img/w/" + day.weather[0].icon + ".png";
+            if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00") {
+                forecastHTML += `
+                <div>
+                    <ul class="list-unstyled p-3">
+                        <li>${thisMoment.format("MM/DD/YY")}</li>
+                        <li class="weather-icon"><img src="${iconURL}"></li>
+                        <li>Temp: ${day.main.temp}&#8457;</li>
+                        <li>Humidity: ${day.main.humidity}%</li>
+                        <li>Wind Speed: ${day.wind.speed} mph</li>
+                    </ul>
+                </div>`;
+            // Build the HTML template
+        forecastHTML += `</div>`;
+            // Append the five-day forecast to the DOM
+        $('#five-day-forecast').html(forecastHTML);
+}}})}
 
 // seach button event listener
 submitBtn.on("click", function(event){
   event.preventDefault();
   var temp = $("#city").val();
-  console.log(temp);
   getCityWeather(temp);
 });
 

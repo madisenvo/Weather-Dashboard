@@ -20,31 +20,24 @@
         </div>
     </header>
 
-    <main class="flex-row">
-        <div id="card" class="col-3">
+    <main class="flex-container">
+        <div id="content-left" class="flex-child col-3">
           <div class="border-bottom">
             <form id="user-form">
               <label id="city-search">Search for a City:</label>
               <input id="city" style="font-size:25px;" type="text" placeholder="Denver" autofocus="true"/>
               <button type="submit" id="submitBtn" class="btn">Search</button>
             </form>
-            <ul id="search-history"></ul>  
           </div>
+          <ul id="search-history"></ul>  
         </div>
           
 
     
-          <div>
-            <div id="city-weather" class="m-10 p-10 align-items-left justify-content-left"></div>
-          </div>
-
-        <div class="row d-none" id="five-day-forecast">
-          <h3>5-Day Forecast</h3>
-          <div class="forecast" ></div>
-          <div class="forecast" ></div>
-          <div class="forecast" ></div>
-          <div class="forecast" ></div>
-          <div class="forecast" ></div>
+        <div id="content-right" class="flex-child col 9">
+          <div id="city-weather" class="m-10 p-10 align-items-left justify-content-left"></div>
+          
+          <div id="five-day-forecast"></div>
         </div>
 
       </main>

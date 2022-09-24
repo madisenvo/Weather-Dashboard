@@ -8,6 +8,14 @@
     background-image: linear-gradient(to right,var(--blue),var(--plum) );
   }
 
+.flex-container{
+  display:flex;
+}
+
+.flex-child{
+  flex:1;
+}
+
   .btn {
     font-size: 1.3rem;
     padding: 6px 5px;
@@ -35,6 +43,10 @@
 } */
 
 #city-weather{
-  border-color: black;
+  justify-content: right;
 }
 
+#search-history{
+  padding: 10px;
+  margin: 10px;
+}
