@@ -6,8 +6,7 @@ var fiveDayForecastEl = $("#five-day-forecast");
 var previousSearch = '';
 var currentCity = '';
 
-//syntax for date forecadst
-//res.dt_txt.split(" ")[0];
+
 
 var APIKey = "019a7bf4afa5e4a22e320f4131dc54fc";
 
@@ -37,10 +36,8 @@ function getCityWeather(newCity) {
     renderCity();
     // getForecast();
 
-
-
     let cityWeatherHTML = `
-      <h3>${res.name} ${res.dt} <img src= https://openweathermap.org/img/w/${res.weather[0].icon}.png> </h3>
+      <h3>${res.name} ${moment().format("(MM/DD/YY)")} <img src= https://openweathermap.org/img/w/${res.weather[0].icon}.png> </h3>
       <ul class="list-unstyled p-3 m-3 bg-primary text-light" style="width: 12rem">
         <li>Temperature: ${res.main.temp}°F</li>
         <li>Humidity: ${res.main.humidity}%</li>
@@ -94,6 +91,9 @@ function renderCity(){
         }
 }}
 
+//syntax for date forecast
+//res.dt_txt.split(" ")[0];
+
 // // getting 5 day forecast
 // var getForecast = function(){
 
@@ -108,18 +108,16 @@ function renderCity(){
 //     // append something
 //   });
 
-  // seach button event listener
+// seach button event listener
 submitBtn.on("click", function(event){
   event.preventDefault();
- var temp = $("#city").val();
- console.log(temp);
+  var temp = $("#city").val();
+  console.log(temp);
   getCityWeather(temp);
 });
 
 $("#search-history").on("click", function(event){
   event.preventDefault();
-  var t = event.target.textContent;
-  //$("#city-search").val(event.target.textContent);
-  //currentCity=$("#city-search").val();
-  getCityWeather(t);
+  var historyBtn = event.target.textContent;
+  getCityWeather(historyBtn);
 });
