@@ -7,7 +7,7 @@ This weather dashboard allows a user to search for a city in the U.S. and see cu
 
 ## Usage
 
-![weather dashboard] (assets/images/page.png)
+![weather dashboard](assets/images/page.png)
 
 Search for a city in the U.S. or click on a city in your search history to view current and upcoming weather conditions.
 
