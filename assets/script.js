@@ -5,9 +5,6 @@ var searchHistoryEl = $("#search-history");
 var fiveDayForecastEl = $("#five-day-forecast");
 var previousSearch = '';
 var currentCity = '';
-
-
-
 var APIKey = "019a7bf4afa5e4a22e320f4131dc54fc";
 
 // getting data from API
