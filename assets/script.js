@@ -20,12 +20,11 @@ function getCityWeather(newCity) {
   .then(function (res) {
     console.log("Res: " +JSON.stringify(res));
     saveSearch(newCity);
-    renderCity();
-    getForecast();
+    showHistory();
     let cityWeatherHTML = `
-      <div class="weather-card card col-7 m-2 p0">
+      <div class="card col-11 m-5">
         <h2>${res.name} ${moment().format("(MM/DD/YY)")} <img src= https://openweathermap.org/img/w/${res.weather[0].icon}.png> </h2>
-        <ul class="list-unstyled p-3 m-3" style="width: 12rem">
+        <ul class="list-unstyled m-3">
           <li>Temperature: ${res.main.temp}°F</li>
           <li>Humidity: ${res.main.humidity}%</li>
           <li>Wind Speed: ${res.wind.speed} mph</li>
@@ -53,7 +52,7 @@ var saveSearch = function(newSearch){
 }
 
 // create function to render search history to page
-function renderCity(){
+function showHistory(){
   $('#search-history').empty();
   if (localStorage.length===0){
     if (previousSearch){
@@ -71,14 +70,13 @@ function renderCity(){
         if (currentCity===""){
             currentCity=previousSearch;
         }
-      cityEl = `<button type="button" class="list-group-item list-group-item-action">${city}</button></li>`;
+      cityEl = `<button type="button" class="w-100 btn-block btn-light btn-lg">${city}</button>`;
         $('#search-history').append(cityEl);
         }
 }}
 
-function getForecast(){
-  let city = $("#city").val();
-  let forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial" + "&appid=" + APIKey;
+function getForecast(newCity){
+  let forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + newCity + "&units=imperial" + "&appid=" + APIKey;
   fetch(forecastQueryURL)
     .then(function (response) {
       return response.json();
@@ -87,7 +85,7 @@ function getForecast(){
       console.log("resp :" + JSON.stringify(res))
       let forecastHTML = `
         <h3>5-Day Forecast:</h3>
-        <div></div>`;
+        <div ml-10></div>`;
         // Loop over the 5 day forecast and build the template HTML using UTC offset and Open Weather Map icon
         for (let i = 0; i < res.list.length; i++) {
             let day = res.list[i];
@@ -98,17 +96,18 @@ function getForecast(){
             let iconURL = "https://openweathermap.org/img/w/" + day.weather[0].icon + ".png";
             if (thisMoment.format("HH:mm:ss") === "11:00:00" || thisMoment.format("HH:mm:ss") === "12:00:00" || thisMoment.format("HH:mm:ss") === "13:00:00") {
                 forecastHTML += `
-                <div>
-                    <ul class="list-unstyled p-3">
-                        <li>${thisMoment.format("MM/DD/YY")}</li>
-                        <li class="weather-icon"><img src="${iconURL}"></li>
-                        <li>Temp: ${day.main.temp}&#8457;</li>
-                        <li>Humidity: ${day.main.humidity}%</li>
-                        <li>Wind Speed: ${day.wind.speed} mph</li>
-                    </ul>
+                <div class="forecast">
+                  <ul class="text-sm list-unstyled">
+                      <li><h5>${thisMoment.format("MM/DD/YY")}</h5></li>
+                      <li><img src="${iconURL}"></li>
+                      <li>Temp: ${day.main.temp}&#8457;</li>
+                      <li>Humidity: ${day.main.humidity}%</li>
+                      <li>Wind Speed: ${day.wind.speed} mph</li>
+                  </ul>
                 </div>`;
             // Build the HTML template
         forecastHTML += `</div>`;
+        
             // Append the five-day forecast to the DOM
         $('#five-day-forecast').html(forecastHTML);
 }}})}
@@ -118,10 +117,12 @@ submitBtn.on("click", function(event){
   event.preventDefault();
   var temp = $("#city").val();
   getCityWeather(temp);
+  getForecast(temp);
 });
 
 $("#search-history").on("click", function(event){
   event.preventDefault();
   var historyBtn = event.target.textContent;
   getCityWeather(historyBtn);
+  getForecast(historyBtn);
 });

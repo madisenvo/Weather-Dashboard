@@ -37,10 +37,13 @@
     border-color: rgb(209, 200, 200);
 }
 
-/* .list-group-item{
-  width: 100%;
-  justify-content: space-between;
-} */
+.forecast{
+  background-color: #1b2f3f;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+  display: inline-flex;
+}
 
 #city-weather{
   justify-content: right;
