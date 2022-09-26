@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<!-- links to bootstrap and css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,400;0,700;1,200&display=swap">
     <link rel="stylesheet" href="./assets/style.css" />
   
 
@@ -19,7 +18,7 @@
             <h1>Weather Dashboard</h1>
         </div>
     </header>
-
+<!-- container for search bar -->
     <main class="flex-container">
         <div id="content-left" class="flex-child col-3">
           <div class="border-bottom">
@@ -29,18 +28,19 @@
               <button type="submit" id="submitBtn" class="btn">Search</button>
             </form>
           </div>
+<!-- div for search history buttons -->
           <ul id="search-history"></ul>  
         </div>
-          
-
-    
+<!-- div for today's weather data -->
         <div id="content-right" class="flex-child">
           <div id="city-weather" class="m-10 p-10 align-items-left justify-content-left"></div>
-          
+<!-- div for 5 day forecast -->
           <div id="five-day-forecast"></div>
         </div>
 
       </main>
+
+<!-- links to jquery, moment.js and js file -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="assets/script.js"></script>
