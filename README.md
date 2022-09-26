@@ -1,5 +1,5 @@
 # Weather-Dashboard
-https://madisenvo.github.io/Weather-Dashboard/
+
 
 ## Description
   
