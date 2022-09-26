@@ -9,7 +9,7 @@ var APIKey = "019a7bf4afa5e4a22e320f4131dc54fc";
 
 // getting data from API
 function getCityWeather(newCity) {
-  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + newCity + "&appid=" + APIKey + "&units=imperial";  
+  var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + newCity + "&appid=" + APIKey + "&units=imperial";  
   fetch(queryURL) 
   .then(function (response) {
     return response.json();
